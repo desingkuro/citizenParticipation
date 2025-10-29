@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import IindexLayout from "../layouts/IindexLayout";
+import IndexLayout from "../layouts/IindexLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 
@@ -20,7 +20,7 @@ export default function Router() {
         },
         {
             path: "/",
-            element: <IindexLayout />,
+            element: <IndexLayout />,
             children: [
                 {
                     path: "",

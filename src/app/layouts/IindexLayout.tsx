@@ -1,17 +1,17 @@
 import { Outlet } from "react-router";
+import Header from "../shared/components/Header";
+import Footer from "../shared/components/Footer";
 
-export default function IindexLayout() {
+export default function IndexLayout() {
     return (
         <div className="flex flex-col min-h-screen w-screen">
-            <header className="bg-gray-800 text-white p-4">
-                <h1 className="text-2xl font-bold">Citizen Participation</h1>
-            </header>
-            <main className="flex-1">
-                <Outlet/>
-            </main>
-            <footer className="bg-gray-800 text-white p-4">
-                <p>Footer</p>
-            </footer>
+            <section className="flex flex-col min-h-screen w-screen">
+                <Header/>
+                <main className="flex-1">
+                    <Outlet/>
+                </main>
+            </section>
+            <Footer/>
         </div>
     );
 }

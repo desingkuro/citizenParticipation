@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import type { Login } from "../interfaces/login";
 import { EMAIL_REGEX } from "../consts/const";
+import { postData } from "../services/Http";
 
 export default function useLogin() {
     const {
@@ -12,7 +13,7 @@ export default function useLogin() {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            email: "",
+            correo: "",
             password: "",
         }
     });
@@ -20,27 +21,33 @@ export default function useLogin() {
     const [viewPassword, setViewPassword] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const onSubmit = (data: Login) => {
-        validateEmail(data.email);
-        validatePassword(data.password);
+
+    const onSubmit = async (data: Login) => {
         setLoading(true);
-        setTimeout(() => {
+        try {
+            validateEmail(data.correo);
+            validatePassword(data.password);
+            console.log(data);
+            const response = await postData("http://Bienvenidos/login", data);
+            console.log(response);
             setLoading(false);
-        }, 2000);
-        console.log(data);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
     };
 
     const validateEmail = (email: string) => {
         if (!EMAIL_REGEX.test(email)) {
-            setError("email", { message: "Invalid email" });
-            return;
+            setError("correo", { message: "Invalid email" });
+            throw new Error("Invalid email");
         }
     };
 
     const validatePassword = (password: string) => {
         if (password.length < 8) {
             setError("password", { message: "Password must be at least 8 characters long" });
-            return;
+            throw new Error("Password must be at least 8 characters long");
         }
     };
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CC_REGEX, CELULAR_REGEX, EMAIL_REGEX, NOMBRE_REGEX, PASSWORD_REGEX, ROL_REGEX } from "../consts/const";
 import type { Register } from "../interfaces/register";
+import { postData } from "../services/Http";
 
 export default function useRegister() {
     const {
@@ -25,19 +26,23 @@ export default function useRegister() {
     const [viewPassword, setViewPassword] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const onSubmit = (data: Register) => {
-        validateEmail(data.correo);
-        validatePassword(data.password);
-        validateConfirmPassword(data.confirmar_password);
-        validateCC(data.cc);
-        validateCelular(data.celular);
-        validateNombre(data.nombre);
-        validateRol(data.roles);
+    const onSubmit = async (data: Register) => {
         setLoading(true);
-        setTimeout(() => {
+        try {
+            validateEmail(data.correo);
+            validatePassword(data.password);
+            validateConfirmPassword(data.confirmar_password);
+            validateCC(data.cc);
+            validateCelular(data.celular);
+            validateNombre(data.nombre);
+            validateRol(data.roles);
+            const response = await postData("http://Bienvenidos/register", data);
+            console.log(response);
             setLoading(false);
-        }, 2000);
-        console.log(data);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
     };
 
     const validateEmail = (email: string) => {

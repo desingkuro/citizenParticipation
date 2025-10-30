@@ -8,22 +8,22 @@ export default function Login() {
     return (
         <div className=" flex flex-col h-screen bg-[#e8e8e8] !p-2">
             <main className="flex-1">
-                <div className="flex flex-col items-center justify-center h-screen">
-                    <header className="flex items-center h-16 justify-center !mb-4">
+                <div className="flex flex-col items-center justify-center h-screen gap-20">
+                    <header className="flex items-center h-16 justify-center">
                         <h1 className="text-6xl font-bold text-gray-900">Citizen Participation</h1>
                     </header>
                     <div className="w-full max-w-md bg-white rounded-lg shadow-md !p-6">
                         <h2 className="text-2xl font-bold text-gray-900 !mb-4">Login User</h2>
                         <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-                            <label htmlFor="email" className="w-full">
+                            <label htmlFor="correo" className="w-full">
                                 <input
                                     type="email"
                                     className="w-full bg-gray-100 text-gray-900 border-0 rounded-md !p-2 !mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                                     placeholder="Email address"
-                                    {...register("email", { required: true })}
+                                    {...register("correo", { required: true })}
                                 />
                             </label>
-                            {errors.email && <p className="text-red-500 font-semibold drop-shadow-red-300">{errors.email.message}</p>}
+                            {errors.correo && <p className="text-red-500 font-semibold drop-shadow-red-300">{errors.correo.message}</p>}
                             <label htmlFor="password" className="w-full relative">
                                 <input
                                     type={viewPassword ? "text" : "password"}

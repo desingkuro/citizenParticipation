@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import type { Login } from "../interfaces/login";
 import { EMAIL_REGEX } from "../consts/const";
 import { postData } from "../services/Http";
+import { Navigate, useNavigate } from "react-router";
 
 export default function useLogin() {
+
     const {
         register,
         handleSubmit,
@@ -20,17 +22,20 @@ export default function useLogin() {
 
     const [viewPassword, setViewPassword] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-
+    const base_url = import.meta.env.VITE_URL_API;
+    const navigate = useNavigate();
 
     const onSubmit = async (data: Login) => {
         setLoading(true);
         try {
             validateEmail(data.correo);
             validatePassword(data.password);
-            console.log(data);
-            const response = await postData("http://Bienvenidos/login", data);
+            const response = await postData(base_url + "auth/login", {email: data.correo, password: data.password});
             console.log(response);
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("auth", 'true');
             setLoading(false);
+            navigate("/");
         } catch (error) {
             console.log(error);
             setLoading(false);

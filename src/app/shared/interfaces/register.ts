@@ -5,5 +5,5 @@ export interface Register {
     password: string;
     confirmar_password: string;
     celular:string;
-    roles:string;
+    roles?:string;
 }

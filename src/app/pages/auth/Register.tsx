@@ -85,17 +85,6 @@ export default function Register() {
                                     : <IoMdEye onClick={() => setViewPassword(!viewPassword)} size={24} className="absolute right-2 top-[40%] -translate-y-1/2 cursor-pointer" />}
                             </label>
                             {errors.confirmar_password && <p className="text-red-500 font-semibold drop-shadow-red-300">{errors.confirmar_password.message}</p>}
-                            <label htmlFor="confirmar_password" className="w-full relative">
-                                <select
-                                    className="w-full bg-gray-100 text-gray-900 border-0 rounded-md !p-2 !mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-                                    {...register("roles", { required: true })}
-                                >
-                                    <option value="">Select</option>
-                                    <option value="user">User</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                            </label>
-                            {errors.roles && <p className="text-red-500 font-semibold drop-shadow-red-300">{errors.roles.message}</p>}
                             <div className="flex items-center justify-between flex-wrap w-full">
                                 <p className="text-gray-900 !mt-2"> Already have an account?
                                     <Link to="/auth/login" className="text-sm text-blue-500 hover:underline !ml-2 !mt-2">Login</Link>

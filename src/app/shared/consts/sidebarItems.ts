@@ -1,0 +1,97 @@
+import type { SidebarInterface } from "../interfaces/sidebar";
+
+export const SidebarItemsMenu: SidebarInterface = {
+  mainMenuItems: [
+    {
+      icon: "FaHome",
+      label: "Home", 
+      title: "Home",
+      route: "/",
+      isActive: false,
+      permission: true,
+    },
+    {
+      icon: "FaSearch",
+      label: "Consultar documentos",
+      title: "Consulta de documentos",
+      route: "/documents",
+      isActive: false,
+      permission: true,
+      children: [
+        {
+          icon: "AiFillFileAdd",
+          label: "Nuevo documento",
+          title: "Nuevo documento",
+          route: "/documents/new",
+          isActive: false,
+          permission: true,
+        },
+        {
+          icon: "AiOutlineEdit",
+          label: "Editar documento",
+          title: "Editar documento",
+          route: "/documents/edit",
+          isActive: false,
+          permission: true,
+        },
+      ],
+    },
+    {
+      icon: "search",
+      label: "Auditoría",
+      title: "Módulo de Auditoría",
+      route: "/audit",
+      isActive: false,
+      permission: true,
+    },
+    {
+      icon: "monitor",
+      label: "Consulta y reportes",
+      title: "Reportes y Consultas",
+      route: "/reports",
+      isActive: false,
+      permission: true,
+    },
+    {
+      icon: "admin",
+      label: "Administración",
+      title: "Administración",
+      route: "/administration",
+      isActive: false,
+      permission: true,
+    },
+    {
+      icon: "dashboard",
+      label: "Dashboard",
+      title: "Panel de Control",
+      route: "/dashboard",
+      isActive: false,
+      permission: true,
+    },
+  ],
+  userMenuItems: [
+    {
+      icon: "user",
+      label: "Perfil",
+      title: "Perfil de usuario",
+      route: "/profile",
+      isActive: false,
+      permission: true,
+    },
+    {
+      icon: "setting",
+      label: "Configuración",
+      title: "Configuración de la cuenta",
+      route: "/settings",
+      isActive: false,
+      permission: true,
+    },
+    {
+      icon: "logout",
+      label: "Salir",
+      title: "Cerrar sesión",
+      isActive: false,
+      permission: true,
+    },
+  ],
+};

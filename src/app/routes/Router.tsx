@@ -2,6 +2,8 @@ import { createBrowserRouter } from "react-router";
 import IndexLayout from "../layouts/IindexLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import AuthGuard from "../guards/Auth";
+import NotFound from "../shared/components/NotFound";
 
 export default function Router() {
     return createBrowserRouter([
@@ -10,11 +12,11 @@ export default function Router() {
             children: [
                 {
                     path: "login",
-                    element: <Login />,
+                    element: <AuthGuard><Login /></AuthGuard>,
                 },
                 {
                     path: "register",
-                    element: <Register />,
+                    element: <AuthGuard><Register /></AuthGuard>,
                 }
             ],
         },
@@ -30,7 +32,7 @@ export default function Router() {
         },
         {
             path: "*",
-            element: <h1 className="text-3xl font-bold underline">404</h1>,
+            element: <NotFound/>
         }
     ]);
 }

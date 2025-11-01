@@ -2,7 +2,8 @@ import axios from "axios";
 
 const headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    'Access-Control-Allow-Origin': '*',
 }
 
 export async function getData(url: string) {

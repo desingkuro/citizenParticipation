@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { CC_REGEX, CELULAR_REGEX, EMAIL_REGEX, NOMBRE_REGEX, PASSWORD_REGEX, ROL_REGEX } from "../consts/const";
+import { CC_REGEX, CELULAR_REGEX, EMAIL_REGEX, NOMBRE_REGEX, PASSWORD_REGEX } from "../consts/const";
 import type { Register } from "../interfaces/register";
 import { postData } from "../services/Http";
+import { Navigate, useNavigate } from "react-router";
 
 export default function useRegister() {
     const {
@@ -19,30 +20,43 @@ export default function useRegister() {
             password: "",
             confirmar_password: "",
             celular: "",
-            roles: "",
         }
     });
 
     const [viewPassword, setViewPassword] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const base_url = import.meta.env.VITE_URL_API;
+    const navigate = useNavigate();
 
     const onSubmit = async (data: Register) => {
         setLoading(true);
         try {
-            validateEmail(data.correo);
-            validatePassword(data.password);
-            validateConfirmPassword(data.confirmar_password);
-            validateCC(data.cc);
-            validateCelular(data.celular);
-            validateNombre(data.nombre);
-            validateRol(data.roles);
-            const response = await postData("http://Bienvenidos/register", data);
+            validateData();
+            const req = {
+                name: data.nombre,
+                nationalId: data.cc,
+                email: data.correo,
+                password: data.password,
+                phone: data.celular,
+            }
+            const response = await postData(base_url + "auth/register", req);
             console.log(response);
             setLoading(false);
+            navigate("/auth/login");
         } catch (error) {
             console.log(error);
             setLoading(false);
         }
+    };
+
+    const validateData = () => {
+        const { nombre, cc, correo, password, confirmar_password, celular } = watch();
+        validateEmail(correo);
+        validatePassword(password);
+        validateConfirmPassword(confirmar_password);
+        validateCC(cc);
+        validateCelular(celular);
+        validateNombre(nombre);
     };
 
     const validateEmail = (email: string) => {
@@ -80,13 +94,6 @@ export default function useRegister() {
     const validateNombre = (nombre: string) => {
         if (!NOMBRE_REGEX.test(nombre)) {
             setError("nombre", { message: "Invalid nombre" });
-            return;
-        }
-    };
-
-    const validateRol = (rol: string) => {
-        if (!ROL_REGEX.test(rol)) {
-            setError("roles", { message: "Invalid rol" });
             return;
         }
     };

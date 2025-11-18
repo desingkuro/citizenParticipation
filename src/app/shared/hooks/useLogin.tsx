@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import type { Login } from "../interfaces/login";
 import { EMAIL_REGEX } from "../consts/const";
 import { postData } from "../services/Http";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function useLogin() {
 

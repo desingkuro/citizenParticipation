@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getData } from "../services/Http";
+import { contextApp } from "../providers/context/ContextApp";
+import type { ContextAppInterface } from "../interfaces/context";
 
 const icons:{[key: string]: string} = {
     "home": "AiFillHome",
@@ -16,20 +18,26 @@ const icons:{[key: string]: string} = {
 
 export default function useSidebar() {
     const urlBase = import.meta.env.VITE_URL_API;
-    const [sidebar, setSidebar] = useState<any>(null);
+    const {state, dispatch}:ContextAppInterface = useContext(contextApp);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        getSidebar();
-    }, []);
+        setLoading(true);
+        if(state.sidebar && state.sidebar.length > 0){
+            setLoading(false);
+        }else{
+            getSidebar();
+        }
+    }, [state]);
 
     const getSidebar = async () => {
         const response: any = await getData(urlBase + "api/v1/menu");
         if(response){
-            setSidebar(response);
-            console.log(response);
+            dispatch({type: "SET_SIDEBAR", payload: response.menu});
         }
+        setLoading(false);
         return response;
     }
     
-    return {sidebar, icons};
+    return {icons, loading, state};
 }
